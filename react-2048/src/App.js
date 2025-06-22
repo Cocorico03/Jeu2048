@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Check if any moves are possible
 function hasAvailableMoves(board) {
   const size = board.length;
   for (let i = 0; i < size; i++) {
@@ -14,16 +13,13 @@ function hasAvailableMoves(board) {
   return false;
 }
 
-// Check if a specific value is on the board
 function hasReachedTile(board, value) {
   return board.some(row => row.includes(value));
 }
 
-// Matrix utilities
 const transpose = matrix => matrix[0].map((_, i) => matrix.map(row => row[i]));
 const reverse = matrix => matrix.map(row => [...row].reverse());
 
-// Movement logic
 function moveLeft(board) {
   return board.map(row => {
     let filtered = row.filter(num => num !== 0);
@@ -44,10 +40,8 @@ const moveRight = board => reverse(moveLeft(reverse(board)));
 const moveUp = board => transpose(moveLeft(transpose(board)));
 const moveDown = board => transpose(moveRight(transpose(board)));
 
-// Create a blank board
 const generateEmptyBoard = size => Array(size).fill().map(() => Array(size).fill(0));
 
-// Add a 2 or 4 to a random empty tile
 function addRandomTile(board) {
   const emptyCells = [];
   for (let i = 0; i < board.length; i++) {
@@ -61,7 +55,6 @@ function addRandomTile(board) {
   return board;
 }
 
-// Score calculation after each move
 function calculatePoints(oldBoard, newBoard) {
   let sum = 0;
   for (let i = 0; i < oldBoard.length; i++) {
@@ -84,7 +77,6 @@ function App() {
   const [hasWon, setHasWon] = useState(false);
   const [highScore, setHighScore] = useState(() => Number(localStorage.getItem('highScore')) || 0);
 
-  // When level changes: initialize new board
   useEffect(() => {
     const size = level === 1 ? 3 : 4;
     const newBoard = addRandomTile(addRandomTile(generateEmptyBoard(size)));
@@ -94,7 +86,6 @@ function App() {
     window.focus();
   }, [level]);
 
-  // Key press logic
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
@@ -145,49 +136,83 @@ function App() {
   }, [board, score, highScore, level, hasWon]);
 
   return (
-    <div className="game-container">
-      <h1>2048 Game</h1>
-      <p>Use arrow keys to move the tiles.</p>
-      <p>Level: {level} — Grid: {boardSize} × {boardSize}</p>
+    <div className="game-container" style={{ display: 'flex', alignItems: 'flex-start' }}>
+      <div style={{
+        background: 'white',
+        padding: '30px',
+        borderRadius: '15px',
+        boxShadow: '0 3px 8px rgba(0,0,0,0.1)',
+        fontSize: '16px',
+        maxWidth: '320px',
+        lineHeight: '1.6'
+      }}>
+        <h2 style={{ fontSize: '20px' }}>🎮 How to Play 2048</h2>
 
-      {/* All top controls in one bar */}
-      <div className="top-bar">
-        <div className="button-group">
-          <button onClick={() => window.location.reload()}>New Game</button>
-          {level === 1 && !hasWon && !showLevelUpMsg && (
-            <button onClick={() => setLevel(prev => prev + 1)}>Next Level</button>
-          )}
-        </div>
-        <div className="score-boxes">
-          <div className="score">Score<br />{score}</div>
-          <div className="high-score">High Score<br />{highScore}</div>
-        </div>
+        <p><strong>Goal:</strong><br />Combine tiles with the same number to reach the 2048 tile.</p>
+
+        <p><strong>🕹️ Controls</strong><br />Use your arrow keys to move tiles:</p>
+        <ul style={{ paddingLeft: '20px', fontSize: '16px' }}>
+          <li>⬅️ Left</li>
+          <li>➡️ Right</li>
+          <li>⬆️ Up</li>
+          <li>⬇️ Down</li>
+        </ul>
+
+        <p>
+          Each move slides all tiles in the chosen direction.
+          When two tiles with the same number collide, they merge and their values are added.
+        </p>
+
+        <p><strong>🌟 Levels</strong><br />Start at 3×3. Reach 64 to unlock 4×4.<br />Keep merging to 2048!</p>
+
+        <p><strong>❌ Game Over</strong><br />No moves left or board is full.</p>
+
+        <p><strong>🏆 Scoring</strong><br />Each merge adds to your score. High score is saved in browser.</p>
+
+        <p><strong>🔁 Reset</strong><br />Click New Game to restart.</p>
       </div>
 
-      {/* Pop-up messages */}
-      {showLevelUpMsg && <div className="popup-message">🎉 Good Job! Let's move to Level 2!</div>}
-      {hasWon && <div className="popup-message win">🏆 You Win!</div>}
 
-      {/* Game Board */}
-      <div className="board">
-        {board.map((row, i) => (
-          <div key={i} className="row">
-            {row.map((cell, j) => (
-              <div key={j} className={`tile tile-${cell}`}>{cell !== 0 ? cell : ''}</div>
-            ))}
+      <div style={{ flex: '2' }}>
+        <h1>2048 Game</h1>
+        <p>Use arrow keys to move the tiles.</p>
+        <p>Level: {level} — Grid: {boardSize} × {boardSize}</p>
+
+        <div className="top-bar">
+          <div className="button-group">
+            <button onClick={() => window.location.reload()}>New Game</button>
+            {level === 1 && !hasWon && !showLevelUpMsg && (
+              <button onClick={() => setLevel(prev => prev + 1)}>Next Level</button>
+            )}
           </div>
-        ))}
-      </div>
-
-      {/* Game Over Popup */}
-      {isGameOver && (
-        <div className="game-over">
-          <div className="game-over-message">
-            <h2>Game Over!</h2>
-            <button onClick={() => window.location.reload()}>Try Again</button>
+          <div className="score-boxes">
+            <div className="score">Score<br />{score}</div>
+            <div className="high-score">High Score<br />{highScore}</div>
           </div>
         </div>
-      )}
+
+        {showLevelUpMsg && <div className="popup-message">🎉 Good Job! Let's move to Level 2!</div>}
+        {hasWon && <div className="popup-message win">🏆 You Win!</div>}
+
+        <div className="board">
+          {board.map((row, i) => (
+            <div key={i} className="row">
+              {row.map((cell, j) => (
+                <div key={j} className={`tile tile-${cell}`}>{cell !== 0 ? cell : ''}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {isGameOver && (
+          <div className="game-over">
+            <div className="game-over-message">
+              <h2>Game Over!</h2>
+              <button onClick={() => window.location.reload()}>Try Again</button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
