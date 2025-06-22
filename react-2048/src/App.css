@@ -25,15 +25,14 @@
 }
 
 .tile {
-  width: 20vw;
-  height: 20vw;
-  max-width: 80px;
-  max-height: 80px;
+  width: 170px;
+  height: 170px;
   background: #eee;
   margin: 5px;
-  font-size: 20px;
+  font-size: 50px;
   font-weight: bold;
-  display: flex;
+  display: inline-block;
+  line-height: 170px;
   align-items: center;
   justify-content: center;
   border-radius: 5px;
@@ -70,4 +69,99 @@
   align-items: center;
   font-size: 3rem;
   color: #333;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.score-boxes {
+  display: flex;
+  gap: 10px;
+}
+
+.score, .high-score {
+  background-color: #ececec;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  min-width: 80px;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+}
+
+.game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-over-message {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+}
+.board {
+  margin: 20px auto;
+  background: #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+
+.popup-message {
+  background-color: #fff3cd;
+  border: 2px solid #ffeeba;
+  color: #856404;
+  padding: 12px 20px;
+  margin: 20px auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  width: fit-content;
+  text-align: center;
+  animation: fadeInOut 2s ease-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: scale(0.95); }
+  10% { opacity: 1; transform: scale(1); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: scale(0.95); }
+}
+
+.popup-message.win {
+  background-color: #d4edda;
+  border: 2px solid #c3e6cb;
+  color: #155724;
+  padding: 14px 24px;
+  margin: 20px auto;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-radius: 8px;
+  text-align: center;
+  animation: fadeInWin 0.5s ease-in-out;
+}
+
+@keyframes fadeInWin {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
 }
