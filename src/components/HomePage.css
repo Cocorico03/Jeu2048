@@ -1,0 +1,46 @@
+.homepage {
+  text-align: center;
+  padding: 80px 20px;
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa;
+  min-height: 100vh;
+}
+
+.homepage h1 {
+  font-size: 3rem;
+  color: #004d40;
+  margin-bottom: 20px;
+  padding-bottom: 25px;
+  text-decoration: underline;
+  font-family: monospace;
+}
+
+.homepage p {
+  font-size: 1.2rem;
+  color: #00796b;
+  margin-bottom: 40px;
+  margin-left: 200px;
+  margin-right: 200px;
+  line-height: 3;
+  font-weight: bolder;
+  font-size: 25px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  
+}
+
+.play-button {
+  background-color: #00bcd4;
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.play-button:hover {
+  background-color: #00838f;
+}
