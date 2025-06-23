@@ -1,10 +1,7 @@
+// Game.js
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import { Link } from 'react-router-dom';
-
-<div className="breadcrumbs">
-  <Link to="/">Home</Link> <span>&gt;</span> <span>Game</span>
-</div>
+import './App.css';
 
 // Check if any moves are possible
 function hasAvailableMoves(board) {
@@ -66,7 +63,7 @@ function addRandomTile(board) {
   return board;
 }
 
-// Score calculation after each move
+// Score calculation
 function calculatePoints(oldBoard, newBoard) {
   let sum = 0;
   for (let i = 0; i < oldBoard.length; i++) {
@@ -89,7 +86,6 @@ function App() {
   const [hasWon, setHasWon] = useState(false);
   const [highScore, setHighScore] = useState(() => Number(localStorage.getItem('highScore')) || 0);
 
-  // When level changes: initialize new board
   useEffect(() => {
     const size = level === 1 ? 3 : 4;
     const newBoard = addRandomTile(addRandomTile(generateEmptyBoard(size)));
@@ -99,7 +95,6 @@ function App() {
     window.focus();
   }, [level]);
 
-  // Key press logic
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
@@ -151,12 +146,15 @@ function App() {
 
   return (
     <div className="game-container">
-      <h1>2048 Game</h1>
-      <p>Use arrow keys to move the tiles.</p>
-      <p>Level: {level} — Grid: {boardSize} × {boardSize}</p>
+      <div className="breadcrumbs">
+        <Link to="/">Home</Link> <span>&gt;</span> <span>Game</span>
+      </div>
 
-      {/* All top controls in one bar */}
-      <div className="top-bar">
+      <h1 style={{ textAlign: 'center' }}>2048 Game</h1>
+      <p style={{ textAlign: 'center' }}>Use arrow keys to move the tiles.</p>
+      <p style={{ textAlign: 'center' }}>Level: {level} — Grid: {boardSize} × {boardSize}</p>
+
+      <div className="top-bar" style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '20px' }}>
         <div className="button-group">
           <button onClick={() => window.location.reload()}>New Game</button>
           {level === 1 && !hasWon && !showLevelUpMsg && (
@@ -169,30 +167,48 @@ function App() {
         </div>
       </div>
 
-      {/* Pop-up messages */}
-      {showLevelUpMsg && <div className="popup-message">🎉 Good Job! Let's move to Level 2!</div>}
-      {hasWon && <div className="popup-message win">🏆 You Win!</div>}
+      <div style={{ display: 'flex', justifyContent: 'flex-start', maxWidth: '1000px', margin: '0 auto', gap: '40px' }}>
+        <div className="instructions-panel" style={{ width: '320px', background: 'white', padding: '30px', borderRadius: '15px', boxShadow: '0 3px 8px rgba(0,0,0,0.1)', fontSize: '16px', lineHeight: '1.6' }}>
+          <h2 style={{ fontSize: '20px' }}>🎮 How to Play 2048</h2>
+          <p><strong>Goal:</strong><br />Combine tiles with the same number to reach the 2048 tile.</p>
+          <p><strong>🕹️ Controls</strong><br />Use your arrow keys to move tiles:</p>
+          <ul style={{ paddingLeft: '20px', fontSize: '16px' }}>
+            <li>⬅️ Left</li>
+            <li>➡️ Right</li>
+            <li>⬆️ Up</li>
+            <li>⬇️ Down</li>
+          </ul>
+          <p>Each move slides all tiles in the chosen direction. When two tiles with the same number collide, they merge and their values are added.</p>
+          <p><strong>🌟 Levels</strong><br />Start at 3×3. Reach 64 to unlock 4×4.<br />Keep merging to 2048!</p>
+          <p><strong>❌ Game Over</strong><br />No moves left or board is full.</p>
+          <p><strong>🏆 Scoring</strong><br />Each merge adds to your score. High score is saved in browser.</p>
+          <p><strong>🔁 Reset</strong><br />Click New Game to restart.</p>
+        </div>
 
-      {/* Game Board */}
-      <div className="board">
-        {board.map((row, i) => (
-          <div key={i} className="row">
-            {row.map((cell, j) => (
-              <div key={j} className={`tile tile-${cell}`}>{cell !== 0 ? cell : ''}</div>
+        <div className="board-wrapper" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          {showLevelUpMsg && <div className="popup-message">🎉 Good Job! Let's move to Level 2!</div>}
+          {hasWon && <div className="popup-message win">🏆 You Win!</div>}
+
+          <div className="board">
+            {board.map((row, i) => (
+              <div key={i} className="row">
+                {row.map((cell, j) => (
+                  <div key={j} className={`tile tile-${cell}`}>{cell !== 0 ? cell : ''}</div>
+                ))}
+              </div>
             ))}
           </div>
-        ))}
-      </div>
 
-      {/* Game Over Popup */}
-      {isGameOver && (
-        <div className="game-over">
-          <div className="game-over-message">
-            <h2>Game Over!</h2>
-            <button onClick={() => window.location.reload()}>Try Again</button>
-          </div>
+          {isGameOver && (
+            <div className="game-over">
+              <div className="game-over-message">
+                <h2>Game Over!</h2>
+                <button onClick={() => window.location.reload()}>Try Again</button>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

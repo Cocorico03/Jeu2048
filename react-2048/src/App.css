@@ -165,3 +165,49 @@
   display: flex;
   gap: 10px;
 }
+
+.breadcrumbs {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #555;
+  font-family: Arial, sans-serif;
+}
+
+.breadcrumbs a {
+  text-decoration: none;
+  color: #00bcd4;
+  font-weight: bold;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs span {
+  margin: 0 5px;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.instructions-panel {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
