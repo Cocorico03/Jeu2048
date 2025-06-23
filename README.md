@@ -1,3 +1,14 @@
+L’interface de notre site de jeu 2048 est simple et épurée
+Nous l’avons donc sélectionnée comme prototype de haute fidélité car les couleurs étaient plus sobres, permettant aisni à l’utilisateur de ne pas se fatiguer les yeux pendant le temps qu’il passera à jouer sur l’interface.
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
